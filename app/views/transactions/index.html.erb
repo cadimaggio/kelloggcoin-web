@@ -4,30 +4,28 @@
 
 <% transactions = Transaction.all%>
 
-<ol>
+<table>
+  <tr>
+    <th>Sender</th>
+    <th>Recipient</th>
+    <th>Amount</th>
+  </tr>
 <% for transaction in transactions
     user_toname = User.find_by({"id" => transaction["to_user_id"]})
     user_fromname = User.find_by({"id" => transaction["from_user_id"]})
     if transaction["from_user_id"] == nil %>
-    <li> Initial Coin Offering: <%=transaction["amount"]%> to <%=user_toname["name"]%>
+    Initial Coin Offering: <%=transaction["amount"]%> to <%=user_toname["name"]%>
     <%else%>
-    </li>
-    <li>
-    <%=user_fromname["name"]%> sent <%=user_toname["name"]%> <%=transaction["amount"]%> coins
+  <tr>
+     <td><%=user_fromname["name"]%></td>
+     <td><%=user_toname["name"]%></td>
+     <td><%=transaction["amount"]%></td>
+  </tr>
     <%end%>
     <%end%>
-    </li>
-</ol>
+</table>
 
 <!-- Step 2: Calculate and display the balances -->
 
     <a href="/dashboard">Go to dashboard</a>
 
-<!-- 
-Expected balances:
-Balance for Brian: 1348 KC
-Balance for Ben: 2516 KC
-Balance for Evan: 1164 KC
-Balance for Anthony: 1456 KC
-Balance for Krystina: 3516 KC 
--->
